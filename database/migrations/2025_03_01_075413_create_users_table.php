@@ -17,6 +17,17 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('nim')->nullable();
+            $table->string('nip')->nullable();
+            $table->enum('jenis_kelamin', ['laki-laki', 'perempuan'])->nullable();;
+            $table->string('foto_profile')->nullable();
+            $table->string('alamat')->nullable();;
+            $table->string('no_hp')->nullable();;
+            $table->string('tempat_lahir')->nullable();;
+            $table->date('tanggal_lahir')->nullable();;
+            $table->string('nomor_anggota')->nullable();
+            $table->unsignedBigInteger('role_id')->nullable();
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('set null')->nullable();;
             $table->rememberToken();
             $table->timestamps();
         });

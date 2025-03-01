@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'nim', 'nip', 'jenis_kelamin', 'foto_profile', 'alamat', 'no_hp', 'tempat_lahir', 'tanggal_lahir', 'nomor_anggota', 'role_id',
     ];
 
     /**
@@ -44,5 +45,31 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function suratPengirim()
+    {
+        return $this->hasMany(Surat::class, 'pengirim');
+    }
+
+    public function suratPenerima()
+    {
+        return $this->hasMany(Surat::class, 'penerima');
+    }
+
+    public function jadwalPiket()
+    {
+        return $this->hasMany(JadwalPiket::class);
+    }
+
+    public function riwayatKeuangan()
+    {
+        return $this->hasMany(RiwayatKeuangan::class);
     }
 }
