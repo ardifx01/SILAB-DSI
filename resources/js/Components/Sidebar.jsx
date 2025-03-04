@@ -29,9 +29,9 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
     },
     { 
       icon: <UsersIcon className="w-5 h-5" />, 
-      label: 'Keanggotaan', 
+      label: 'Kepengurusan', 
       submenu: [
-        { label: 'Anggota Aktif', href: '/membership/active' },
+        { label: 'Tahun Kepengurusan', href: '/tahun-kepengurusan' },
         { label: 'Permintaan Baru', href: '/membership/requests' },
         { label: 'Alumni', href: '/membership/alumni' }
       ] 

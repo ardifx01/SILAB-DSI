@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class TahunKepengurusan extends Model
 {
-    protected $fillable = ['tahun', 'isactive'];
+    protected $table = 'tahun_kepengurusan'; 
+    protected $fillable = ['tahun', 'isactive', 'mulai', 'selesai'];
 
     public function kepengurusan()
     {

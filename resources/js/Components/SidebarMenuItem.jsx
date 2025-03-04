@@ -4,10 +4,25 @@ import { ChevronDownIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import Collapsible from './Collapsible';
 
 const SidebarMenuItem = ({ icon, label, href, isCollapsed, submenu }) => {
-  const [isSubmenuOpen, setIsSubmenuOpen] = useState(false);
+  const { url } = usePage();
   const hasSubmenu = submenu && submenu.length > 0;
   const submenuRef = useRef(null);
-  const { url } = usePage();
+  
+  // Check if current URL matches any submenu item
+  const isSubmenuActive = hasSubmenu && submenu.some(item => url === item.href);
+  
+  // Initialize submenu open state based on whether any submenu item is active
+  const [isSubmenuOpen, setIsSubmenuOpen] = useState(isSubmenuActive);
+  
+  // Fix hover issues with collapsed sidebar tooltip
+  const [hoverTimeout, setHoverTimeout] = useState(null);
+  
+  // Update submenu state when URL changes or when submenu items change
+  useEffect(() => {
+    if (hasSubmenu && submenu.some(item => url === item.href)) {
+      setIsSubmenuOpen(true);
+    }
+  }, [url, submenu, hasSubmenu]);
 
   // Close submenu when sidebar collapses
   useEffect(() => {
@@ -15,9 +30,6 @@ const SidebarMenuItem = ({ icon, label, href, isCollapsed, submenu }) => {
       setIsSubmenuOpen(false);
     }
   }, [isCollapsed]);
-
-  // Fix hover issues with collapsed sidebar tooltip
-  const [hoverTimeout, setHoverTimeout] = useState(null);
   
   const handleMouseEnter = () => {
     if (isCollapsed && hasSubmenu) {
@@ -53,7 +65,7 @@ const SidebarMenuItem = ({ icon, label, href, isCollapsed, submenu }) => {
               <Link
                 href={href}
                 className={`flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg group relative transition-all duration-200 ease-in-out ${
-                  url === href ? 'bg-gray-100 font-semibold' : ''
+                  url === href || isSubmenuActive ? 'bg-gray-100 font-semibold' : ''
                 }`}
               >
                 <div className="flex items-center flex-grow min-w-0">
@@ -70,7 +82,9 @@ const SidebarMenuItem = ({ icon, label, href, isCollapsed, submenu }) => {
               </Link>
             ) : (
               <button
-                className="flex items-center w-full px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg group relative transition-all duration-200 ease-in-out"
+                className={`flex items-center w-full px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg group relative transition-all duration-200 ease-in-out ${
+                  isSubmenuActive ? 'bg-gray-100 font-semibold' : ''
+                }`}
               >
                 <div className="flex items-center flex-grow min-w-0">
                   <div className="relative flex-shrink-0">

@@ -11,6 +11,8 @@ return new class extends Migration
         Schema::create('tahun_kepengurusan', function (Blueprint $table) {
             $table->id();
             $table->string('tahun');
+            $table->string('mulai');
+            $table->string('selesai');
             $table->boolean('isactive');
             $table->timestamps();
         });
